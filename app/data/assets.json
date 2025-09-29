@@ -1,0 +1,62 @@
+[
+  {
+    "id": "w1",
+    "category": "watch",
+    "brand": "Patek Philippe",
+    "name": "Grandmaster Chime 6300A (Only Watch)",
+    "year": 2019,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/70/Patek_Philippe_Grandmaster_Chime_6300A-010.jpg",
+    "value": 31000000,
+    "description": "Unique stainless steel Grandmaster Chime auctioned for Only Watch."
+  },
+  {
+    "id": "a1",
+    "category": "art",
+    "brand": "Pablo Picasso",
+    "name": "Les Femmes d'Alger (Version O)",
+    "year": 1955,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Picasso_-_Les_Femmes_d%27Alger_%28Version_O%29.jpg",
+    "value": 160000000,
+    "description": "Record-breaking Picasso from the 'Women of Algiers' series."
+  },
+  {
+    "id": "c1",
+    "category": "car",
+    "brand": "Ferrari",
+    "name": "250 GTO",
+    "year": 1962,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1f/1962_Ferrari_250_GTO_34.jpg",
+    "value": 52000000,
+    "description": "The blue-chip of collectible cars."
+  },
+  {
+    "id": "g1",
+    "category": "gem",
+    "brand": "Hope Diamond",
+    "name": "Hope Diamond",
+    "year": 1668,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/09/Hope_Diamond.jpg",
+    "value": 200000000,
+    "description": "Famous deep-blue diamond at the Smithsonian."
+  },
+  {
+    "id": "v1",
+    "category": "wine",
+    "brand": "DRC Roman\u00e9e-Conti",
+    "name": "Roman\u00e9e-Conti 1945",
+    "year": 1945,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/33/Domaine_de_la_Romanee-Conti_wine_bottle.jpg",
+    "value": 450000,
+    "description": "Legendary final pre-replant vintage of Roman\u00e9e-Conti."
+  },
+  {
+    "id": "s1",
+    "category": "sneaker",
+    "brand": "Nike",
+    "name": "Air Jordan 1 'Chicago' (1985)",
+    "year": 1985,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/13/Air_Jordan_1_%27Chicago%27.jpg",
+    "value": 150000,
+    "description": "OG pair from the iconic first Jordan model."
+  }
+]
