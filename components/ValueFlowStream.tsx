@@ -1,7 +1,7 @@
 'use client'
 import React, { useMemo } from 'react'
 import {
-  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Legend, CartesianGrid, defs
+  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Legend, CartesianGrid
 } from 'recharts'
 
 interface FlowPoint {
@@ -28,17 +28,22 @@ export default function ValueFlowStream({
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
+            {/* SVG native: NON si importa da 'recharts' */}
             <defs>
               {keys.map((k) => (
                 <linearGradient id={`grad-${k}`} key={k} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={colors[k] ?? '#7dd3fc'} stopOpacity={0.9}/>
-                  <stop offset="100%" stopColor={colors[k] ?? '#7dd3fc'} stopOpacity={0.15}/>
+                  <stop offset="0%" stopColor={colors[k] ?? '#7dd3fc'} stopOpacity={0.9} />
+                  <stop offset="100%" stopColor={colors[k] ?? '#7dd3fc'} stopOpacity={0.15} />
                 </linearGradient>
               ))}
             </defs>
+
             <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
             <XAxis dataKey="date" tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 12 }} />
-            <YAxis tickFormatter={(v) => `${Math.round((v as number) * 100)}%`} tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 12 }} />
+            <YAxis
+              tickFormatter={(v) => `${Math.round((v as number) * 100)}%`}
+              tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 12 }}
+            />
             <Tooltip
               contentStyle={{ background: '#141516', border: '1px solid rgba(255,255,255,0.08)' }}
               formatter={(v: number) => `${(v * 100).toFixed(1)}%`}
