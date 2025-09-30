@@ -10,12 +10,10 @@ import InfoTip from '@/components/InfoTip'
 import InteractiveNavWheel from '@/components/InteractiveNavWheel'
 import CategoryBarRace from '@/components/CategoryBarRace'
 import ConfidenceArea from '@/components/ConfidenceArea'
+import NavDonut from '@/components/NavDonut'
 import ValueFlowStream from '@/components/ValueFlowStream'
-import NavMeter from '@/components/NavMeter'
 
-// NEW Synth components
-import SynthRoundMeter from '@/components/SynthRoundMeter'
-
+/* ---------- helpers ---------- */
 function sum(xs:number[]){ return xs.reduce((a,b)=>a+b,0) }
 
 /** Serie “stabile” per Confidence bands + TWAP (deterministica giornaliera) */
@@ -58,12 +56,14 @@ function buildFlow(byCat: {name:string, value:number}[], days=30){
       day[b.name] = v
       acc += v
     })
+    // normalizza a 1 (river percentuale)
     base.forEach(b => { day[b.name] = day[b.name] / acc })
     out.push(day)
   }
   return out
 }
 
+/* ---------- page ---------- */
 export default function Home(){
   const total = sum((assets as any[]).map(a=>a.value))
 
@@ -82,100 +82,73 @@ export default function Home(){
 
   return (
     <>
-      {/* HERO premium con bagliori + CTA */}
-      <HeroBanner />
-
-      {/* TICKER Synth full-width (dentro pill) */}
-      <div className="synth-card p-0 overflow-hidden mt-3">
-        <Ticker items={byCat.map(c=>c.name)} />
-      </div>
-
-      {/* KPI + ORACLE */}
-      <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
-        <div className="synth-card p-4">
-          <div className="text-xs text-white3">
-            Total Vault NAV <InfoTip text="Sum of all appraised assets currently in custody (mock). Updated daily @ 00:00 UTC." />
+      {/* === 1) NAV WHEEL IN TESTA (hero tecnico) === */}
+      <section id="nav" className="mt-2 mb-4">
+        <div className="card p-0 overflow-hidden">
+          <div className="px-5 pt-4 flex items-center justify-between">
+            <h2 className="text-sm font-medium">NAV Wheel</h2>
+            <div className="text-xs text-slate-400">Drag to rotate • Auto-rotate on</div>
           </div>
-          <div className="text-2xl font-semibold mt-1">€ <CounterRoll value={total} decimals={0}/></div>
+          <div className="p-4">
+            {/* La wheel è il focus primario: thin ring e interazione sono nel componente */}
+            <InteractiveNavWheel data={byCat} />
+          </div>
+        </div>
+      </section>
+
+      {/* === 2) TICKER full width === */}
+      <section className="mb-3">
+        <Ticker items={byCat.map(c=>c.name)} />
+      </section>
+
+      {/* === 3) KPI + ORACLE === */}
+      <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <div className="card">
+          <div className="text-xs text-slate-400">
+            Total Vault NAV{' '}
+            <InfoTip text="Somma di tutti gli asset stimati in custodia (demo). Aggiornamento deterministico quotidiano alle 00:00 UTC." />
+          </div>
+          <div className="text-2xl font-semibold">€ <CounterRoll value={total} decimals={0}/></div>
           <MiniSpark data={[10,11,13,12,14,15,16,17,16,18,19,20]}/>
-          <div className="mt-2 text-[11px] text-white3">Hysteresis ≥ 1.5%</div>
+          <div className="badge mt-2">Hysteresis ≥ 1.5%</div>
         </div>
 
-        <div className="synth-card p-4">
-          <div className="text-xs text-white3">
-            Minted supply (demo) <InfoTip text="Supply minted vs NAV. Real mint becomes active once Sepolia ENV are set." />
+        <div className="card">
+          <div className="text-xs text-slate-400">
+            Minted supply (demo){' '}
+            <InfoTip text="Supply coniato vs NAV. Il mint reale si attiva non appena configuri le ENV Sepolia." />
           </div>
-          <div className="text-2xl font-semibold mt-1">
+          <div className="text-2xl font-semibold">
             <CounterRoll value={total/1000} suffix=" STIMA" decimals={2}/>
           </div>
-          <div className="text-[11px] text-white3 mt-2">Deterministic @ 00:00 UTC</div>
+          <div className="text-xs text-slate-400 mt-1">Deterministic @ 00:00 UTC</div>
         </div>
 
-        <div className="synth-card p-4">
-          <div className="text-xs text-white3">Categories</div>
-          <div className="text-2xl font-semibold mt-1">{byCat.length}</div>
-          <div className="text-xs text-white3 mt-1">Watch, Art, Car, Gem, Wine, Sneaker</div>
+        <div className="card">
+          <div className="text-xs text-slate-400">Categories</div>
+          <div className="text-2xl font-semibold">{byCat.length}</div>
+          <div className="text-xs text-slate-400 mt-1">Watch, Art, Car, Gem, Wine, Sneaker</div>
         </div>
 
         {/* Card con stile proprio */}
         <OracleSatellite status="Online" />
       </section>
 
-      {/* COVERFLOW 3D + News */}
-      <section className="grid md:grid-cols-2 gap-3 mt-3">
-        <CoverFlow3D items={featured} />
-        <div className="synth-card p-4">
-          <div className="text-sm font-medium mb-2">News (placeholder)</div>
-          <ul className="text-sm space-y-2">
-            <li>• Sotheby’s sets new record in modern art evening sale.</li>
-            <li>• Rare Rolex Daytona achieves 7-figure hammer price.</li>
-            <li>• Burgundy rally pauses after three months of gains.</li>
-            <li>• Blue-chip classic car index hits decade high.</li>
-          </ul>
-          <div className="text-xs text-white3 mt-2">Soon: curated feed + sources.</div>
-        </div>
-      </section>
-
-      {/* NAV WHEEL + SIDE CHARTS */}
-      <section className="grid lg:grid-cols-3 gap-3 mt-3">
-        {/* 2/3: ruota interattiva con vibrazioni + tick */}
-        <div className="lg:col-span-2">
-          <InteractiveNavWheel data={byCat} />
-        </div>
-
-        {/* 1/3: stack aggiuntivi */}
+      {/* === 4) CHARTS SECONDARI accanto alla Wheel === */}
+      <section className="grid lg:grid-cols-3 gap-3 mb-8">
+        {/* Colonna di supporto */}
         <div className="grid gap-3">
-          {/* Donut/Meter Synth stile CRED */}
-          <div className="synth-card p-4">
-            <div className="text-sm font-medium mb-2">NAV Meter</div>
-            <div className="flex justify-center">
-              <SynthRoundMeter
-                value={Math.min(1, (byCat[0]?.value || 0) / 100)}
-                label="NAV Composition"
-                minText="300"
-                maxText="900"
-                centerText={String(Math.round(total / 1000))}
-                gradient="copper"
-              />
-            </div>
-          </div>
-
           <CategoryBarRace data={byCat} />
+          <div className="card">
+            <div className="text-sm font-medium mb-2">NAV Composition — Donut</div>
+            <NavDonut data={byCat} />
+          </div>
         </div>
-      </section>
-<section className="grid md:grid-cols-2 gap-3 mt-3">
-  <NavMeter
-    value={total}                  // il tuo NAV totale
-    min={0}
-    max={1_000_000}
-    title="NAV Meter"
-    description="Indicatore trofico del NAV totale rispetto al range target; utile per uno sguardo rapido."
-  />
-  {/* …l’altro widget a fianco… */}
-</section>
-      {/* CONFIDENCE BANDS + VALUE FLOW STREAM */}
-      <section className="grid md:grid-cols-2 gap-3 mt-3">
+
+        {/* Confidence bands + TWAP */}
         <ConfidenceArea data={series} />
+
+        {/* Value Flow Stream (river %) */}
         <ValueFlowStream
           data={flow}
           colors={{
@@ -184,9 +157,24 @@ export default function Home(){
         />
       </section>
 
-      {/* TOP VAULT + EXTRA NEWS */}
-      <section className="grid md:grid-cols-2 gap-3 mt-3">
-        <div className="synth-card p-4">
+      {/* === 5) FEATURED + NEWS === */}
+      <section className="grid md:grid-cols-2 gap-3 mb-8">
+        <CoverFlow3D items={featured} />
+        <div className="card">
+          <div className="text-sm font-medium mb-2">News (placeholder)</div>
+          <ul className="text-sm space-y-2">
+            <li>• Sotheby’s sets new record in modern art evening sale.</li>
+            <li>• Rare Rolex Daytona achieves 7-figure hammer price.</li>
+            <li>• Burgundy rally pauses after three months of gains.</li>
+            <li>• Blue-chip classic car index hits decade high.</li>
+          </ul>
+          <div className="text-xs text-slate-500 mt-2">Soon: curated feed + sources.</div>
+        </div>
+      </section>
+
+      {/* === 6) TOP VAULT ASSETS === */}
+      <section className="grid md:grid-cols-2 gap-3 mb-10">
+        <div className="card">
           <div className="text-sm font-medium mb-2">Top Vault Assets</div>
           <div className="space-y-2">
             {top5.map(a => (
@@ -194,7 +182,7 @@ export default function Home(){
                 <img src={a.image} alt="" className="w-12 h-12 object-cover rounded-lg"/>
                 <div className="flex-1">
                   <div className="text-sm font-medium">{a.brand} — {a.name}</div>
-                  <div className="text-xs text-white3">
+                  <div className="text-xs text-slate-400">
                     {a.category} • € {a.value.toLocaleString('en-US')}
                   </div>
                 </div>
@@ -204,15 +192,8 @@ export default function Home(){
           </div>
         </div>
 
-        <div className="synth-card p-4">
-          <div className="text-sm font-medium mb-2">Market Headlines (placeholder)</div>
-          <ul className="text-sm space-y-2">
-            <li>• Auction liquidity improves across blue-chip categories.</li>
-            <li>• Vault custody premiums tighten as inflows rise.</li>
-            <li>• Tokenized RWA indices outperform crypto majors this week.</li>
-          </ul>
-          <div className="text-xs text-white3 mt-2">Soon: live feed & sources.</div>
-        </div>
+        {/* Hero emozionale spostato in basso per chiudere con CTA */}
+        <HeroBanner />
       </section>
     </>
   )
