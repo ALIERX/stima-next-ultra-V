@@ -1,24 +1,33 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
-  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        ink: '#0A0A0B',
-        card: '#1E1E1F',
-        gold: '#B48C58',
-        platinum: '#6E7F8A',
-        wine: '#722F37',
-        petroleum: '#0F4C81',
-        crypto: '#00FFD1',
-        alert: '#FF3B3B'
+        ink: "#0B0C0D",       // sfondo principale
+        panel: "#212426",     // card Synth
+        graphite: "#343739",
+        white3: "#8C8E8F",
+        copper: {
+          300: "#F9D3B4",
+          400: "#D9896A",
+          600: "#945439",
+        },
+        emerald: "#BDD253",
       },
-      backgroundImage: {
-        'metal-gradient': 'linear-gradient(135deg, #1E1E1F 0%, #0A0A0B 100%)',
-        'gold-sheen': 'linear-gradient(135deg, #B48C58 0%, #7a5d3b 100%)'
-      }
-    }
+      boxShadow: {
+        "neu-out": "-6px -6px 12px rgba(255,255,255,0.04), 6px 6px 12px rgba(0,0,0,0.16)",
+        "neu-in": "inset -4px -4px 8px rgba(255,255,255,0.02), inset 4px 4px 12px rgba(0,0,0,0.32)",
+      },
+      borderRadius: {
+        pill: "100px",
+      },
+      backdropBlur: {
+        synth: "6px",
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 }
