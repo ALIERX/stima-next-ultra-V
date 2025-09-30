@@ -4,7 +4,7 @@ import {
   ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Legend
 } from 'recharts'
 
-type FlowPoint = { date: string; [category: string]: number } // es: {date:'2025-09-01', Art: 12, Watch: 8, ...}
+type FlowPoint = { date: string } & { [category: string]: number | string };
 
 export default function ValueFlowStream({
   data,
