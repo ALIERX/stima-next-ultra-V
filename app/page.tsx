@@ -93,9 +93,9 @@ export default function Home(){
 
       {/* CONFIDENCE BANDS + HEATMAP */}
       <section className="grid md:grid-cols-2 gap-3">
-        <ConfidenceArea data={series} />
-        <CalendarHeatmapLite />
-      </section>
+  <ConfidenceArea data={series} />
+  <CalendarHeatmapLite />
+</section>
 
       {/* TOP VAULT + NEWS */}
       <section className="grid md:grid-cols-2 gap-3">
