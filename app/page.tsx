@@ -12,6 +12,7 @@ import CategoryBarRace from '@/components/CategoryBarRace'
 import ConfidenceArea from '@/components/ConfidenceArea'
 import NavDonut from '@/components/NavDonut'
 import ValueFlowStream from '@/components/ValueFlowStream'
+import TokenIntelCard from '@/components/TokenIntelCard'
 
 /* ---------- helpers ---------- */
 function sum(xs:number[]){ return xs.reduce((a,b)=>a+b,0) }
