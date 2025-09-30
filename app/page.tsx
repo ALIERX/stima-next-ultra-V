@@ -82,19 +82,19 @@ export default function Home(){
 
   return (
     <>
-      {/* === 1) NAV WHEEL IN TESTA (hero tecnico) === */}
-      <section id="nav" className="mt-2 mb-4">
-        <div className="card p-0 overflow-hidden">
-          <div className="px-5 pt-4 flex items-center justify-between">
-            <h2 className="text-sm font-medium">NAV Wheel</h2>
-            <div className="text-xs text-slate-400">Drag to rotate • Auto-rotate on</div>
-          </div>
-          <div className="p-4">
-            {/* La wheel è il focus primario: thin ring e interazione sono nel componente */}
-            <InteractiveNavWheel data={byCat} />
-          </div>
-        </div>
-      </section>
+{/* === 1) NAV WHEEL IN TESTA (hero tecnico) === */}
+<section id="nav" className="mt-2 mb-4">
+  <div className="card p-0 overflow-hidden">
+    <div className="px-5 pt-4 flex items-center justify-between">
+      <h2 className="text-sm font-medium">NAV Wheel</h2>
+      <div className="text-xs text-slate-400">Drag to rotate • Auto-rotate on</div>
+    </div>
+    <div className="p-4">
+      {/* la wheel NON deve wrappare un'altra card */}
+      <InteractiveNavWheel data={byCat} />
+    </div>
+  </div>
+</section>
 
       {/* === 2) TICKER full width === */}
       <section className="mb-3">
