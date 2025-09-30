@@ -13,6 +13,11 @@ import ConfidenceArea from '@/components/ConfidenceArea'
 import NavDonut from '@/components/NavDonut'
 import ValueFlowStream from '@/components/ValueFlowStream'
 import TokenIntelCard from '@/components/TokenIntelCard'
+import dynamic from 'next/dynamic'
+
+// ❌ rimuovi eventuale: import { TokenIntelCard } from '@/components/TokenIntelCard'
+// ✅ usa default + no-SSR (usa hook, vibrazione, ecc.)
+const TokenIntelCard = dynamic(() => import('@/components/TokenIntelCard'), { ssr: false })
 
 /* ---------- helpers ---------- */
 function sum(xs:number[]){ return xs.reduce((a,b)=>a+b,0) }
@@ -206,4 +211,8 @@ import TokenIntelCard from '@/components/TokenIntelCard'
       </section>
     </>
   )
+}
+// app/page.tsx (o /mint, /_not-found, /assets, ecc.)
+export const viewport = {
+  themeColor: '#0A0A0B',
 }
