@@ -133,7 +133,15 @@ export default function Home(){
         {/* Card con stile proprio */}
         <OracleSatellite status="Online" />
       </section>
+import TokenIntelCard from '@/components/TokenIntelCard'
 
+// …
+<section className="grid md:grid-cols-2 gap-3 mt-3">
+  <TokenIntelCard address="0xD2e5decc08A80be6538F89f9AB8ff296e2f724Df" />
+  {/* accanto puoi tenere News/Top assets ecc. */}
+  <div className="card">…</div>
+</section>
+      
       {/* === 4) CHARTS SECONDARI accanto alla Wheel === */}
       <section className="grid lg:grid-cols-3 gap-3 mb-8">
         {/* Colonna di supporto */}
