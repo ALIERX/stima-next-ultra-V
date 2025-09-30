@@ -12,7 +12,6 @@ import CategoryBarRace from '@/components/CategoryBarRace'
 import ConfidenceArea from '@/components/ConfidenceArea'
 import NavDonut from '@/components/NavDonut'
 import ValueFlowStream from '@/components/ValueFlowStream'
-import TokenIntelCard from '@/components/TokenIntelCard'
 import dynamic from 'next/dynamic'
 
 // ❌ rimuovi eventuale: import { TokenIntelCard } from '@/components/TokenIntelCard'
