@@ -145,3 +145,4 @@ html, body { background:#0B0C0D; }
   border:2px solid rgba(0,0,0,.08);
   backdrop-filter: blur(6px);
 }
+html { scroll-behavior: smooth; }
