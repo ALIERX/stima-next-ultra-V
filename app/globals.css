@@ -128,3 +128,13 @@ html, body { background:#0B0C0D; }
 .label-cap{ font: 700 12px/22px 'Inter', system-ui; letter-spacing:.025em; text-transform:uppercase; color:#BDD253; } /* se vuoi copper: usa color:var(--copper-300) */
 .copy-14{ font:600 14px/22px 'Inter', system-ui; letter-spacing:.005em; color:var(--plat-300); }
 .meta-12{ font:500 12px/22px 'Inter', system-ui; letter-spacing:.025em; color:var(--plat-300); }
+
+
+/* carta “synth” in rilievo */
+.neu-card{
+  background:#212426;
+  border-radius:14px;
+  box-shadow:-8px -8px 12px rgba(255,255,255,.04), 8px 8px 12px rgba(0,0,0,.16), inset 0 0 0 1px rgba(255,255,255,.04);
+  border:2px solid rgba(0,0,0,.08);
+  backdrop-filter: blur(6px);
+}
