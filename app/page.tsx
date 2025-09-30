@@ -3,6 +3,10 @@ import CounterRoll from '@/components/CounterRoll'
 import Ticker from '@/components/Ticker'
 import NavDonut from '@/components/NavDonut'
 import MiniSpark from '@/components/MiniSpark'
+import HeroBanner from '@/components/HeroBanner'
+import OracleSatellite from '@/components/OracleSatellite'
+import CoverFlow3D from '@/components/CoverFlow3D'
+import InfoTip from '@/components/InfoTip'
 
 function sum(xs:number[]){ return xs.reduce((a,b)=>a+b,0) }
 
@@ -13,16 +17,23 @@ export default function Home(){
 
   const top5 = [...assets].sort((a,b)=>b.value-a.value).slice(0,5)
 
+  const featured = assets.slice(0,5).map(a=>({
+    id: a.id, image: a.image, title: `${a.brand}`, subtitle: a.name
+  }))
+
   return (
     <>
+      <HeroBanner />
+
+      {/* KPI row */}
       <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="card">
-          <div className="text-xs text-slate-400">Total Vault NAV</div>
+          <div className="text-xs text-slate-400">Total Vault NAV <InfoTip text="Sum of all appraised assets currently in custody (mock). Updates daily @ 00:00 UTC." /></div>
           <div className="text-2xl font-semibold">€ <CounterRoll value={total} decimals={0}/></div>
           <MiniSpark data={[10,11,13,12,14,15,16,17,16,18,19,20]}/>
         </div>
         <div className="card">
-          <div className="text-xs text-slate-400">Minted supply (demo)</div>
+          <div className="text-xs text-slate-400">Minted supply (demo) <InfoTip text="Supply minted vs NAV. Real mint becomes active once Sepolia ENV are set." /></div>
           <div className="text-2xl font-semibold"><CounterRoll value={total/1000} suffix=" STIMA" decimals={2}/></div>
           <div className="badge mt-2">Deterministic @ 00:00 UTC</div>
         </div>
@@ -31,13 +42,10 @@ export default function Home(){
           <div className="text-2xl font-semibold">{byCat.length}</div>
           <div className="text-xs text-slate-400 mt-1">Watch, Art, Car, Gem, Wine, Sneaker</div>
         </div>
-        <div className="card">
-          <div className="text-xs text-slate-400">Oracle status</div>
-          <div className="text-2xl font-semibold text-emerald-400">Online</div>
-          <div className="text-xs text-slate-400 mt-1">Last update: 00:00 UTC</div>
-        </div>
+        <OracleSatellite status="Online" />
       </section>
 
+      {/* Ticker + Donut */}
       <section className="grid md:grid-cols-2 gap-3">
         <div className="card">
           <div className="text-sm font-medium mb-2">Market Ticker</div>
@@ -49,22 +57,9 @@ export default function Home(){
         </div>
       </section>
 
+      {/* Cover Flow + News */}
       <section className="grid md:grid-cols-2 gap-3">
-        <div className="card">
-          <div className="text-sm font-medium mb-2">Top Vault Assets</div>
-          <div className="space-y-2">
-            {top5.map(a => (
-              <div key={a.id} className="flex items-center gap-3">
-                <img src={a.image} alt="" className="w-12 h-12 object-cover rounded-lg"/>
-                <div className="flex-1">
-                  <div className="text-sm font-medium">{a.brand} — {a.name}</div>
-                  <div className="text-xs text-slate-400">{a.category} • € {a.value.toLocaleString('en-US')}</div>
-                </div>
-                <div className="text-xs text-emerald-400">▲ {(Math.random()*2+0.5).toFixed(2)}%</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <CoverFlow3D items={featured} />
         <div className="card">
           <div className="text-sm font-medium mb-2">News (placeholder)</div>
           <ul className="text-sm space-y-2">
