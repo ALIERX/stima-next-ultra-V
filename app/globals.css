@@ -86,3 +86,45 @@ html, body { background:#0B0C0D; }
   width:38px; height:38px; border-radius:100px; padding:7px;
   background:#212426; box-shadow: inset -4px -4px 8px rgba(255,255,255,.02), inset 4px 4px 12px rgba(0,0,0,.32);
 }
+:root{
+  --ink:#0A0A0B;         /* bg */
+  --panel:#212426;       /* card fill */
+  --stroke:rgba(255,255,255,.06); /* hairline */
+  --deep:rgba(0,0,0,.16); /* shadow scuro */
+  --light:rgba(255,255,255,.04); /* shadow chiaro */
+  --copper-300:#F9D3B4;  --copper-400:#D9896A; --copper-500:#945439;
+  --plat-300:#8C8E8F;    --plat-500:#343739;
+}
+
+/* CARD RAISED: stacca dal fondo con doppia ombra */
+.card-raised{
+  background: var(--panel);
+  border-radius: 14px;
+  box-shadow: -8px -8px 12px var(--light), 8px 8px 12px var(--deep);
+  border: 1px solid var(--stroke);
+}
+
+/* CARD INSET: bevel interno (es. contenitori rotondi/icone) */
+.inset{
+  box-shadow: inset -4px -4px 8px rgba(255,255,255,.02),
+              inset  6px  6px 14px rgba(0,0,0,.35);
+}
+
+/* Copper glow delicato (per elementi interattivi) */
+.glow-copper{
+  box-shadow:
+    0 0 0 1px rgba(249,211,180,.08),
+    0 0 22px rgba(249,211,180,.10);
+}
+
+/* Divider stile Synth (riga “donut” arancio rame sfumato) */
+.hr-synth{
+  height:1px;
+  background: linear-gradient(270deg, rgba(196,101,69,.08) 0%, #C46545 50%, rgba(196,101,69,.08) 100%);
+  border-top:1px solid rgba(0,0,0,.8);
+}
+
+/* Micro label e copy */
+.label-cap{ font: 700 12px/22px 'Inter', system-ui; letter-spacing:.025em; text-transform:uppercase; color:#BDD253; } /* se vuoi copper: usa color:var(--copper-300) */
+.copy-14{ font:600 14px/22px 'Inter', system-ui; letter-spacing:.005em; color:var(--plat-300); }
+.meta-12{ font:500 12px/22px 'Inter', system-ui; letter-spacing:.025em; color:var(--plat-300); }
