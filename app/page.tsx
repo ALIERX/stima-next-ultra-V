@@ -1,3 +1,4 @@
+// app/page.tsx
 import assets from './data/assets.json'
 import CounterRoll from '@/components/CounterRoll'
 import Ticker from '@/components/Ticker'
@@ -9,8 +10,10 @@ import InfoTip from '@/components/InfoTip'
 import InteractiveNavWheel from '@/components/InteractiveNavWheel'
 import CategoryBarRace from '@/components/CategoryBarRace'
 import ConfidenceArea from '@/components/ConfidenceArea'
-import NavDonut from '@/components/NavDonut'
 import ValueFlowStream from '@/components/ValueFlowStream'
+
+// NEW Synth components
+import SynthRoundMeter from '@/components/SynthRoundMeter'
 
 function sum(xs:number[]){ return xs.reduce((a,b)=>a+b,0) }
 
@@ -54,7 +57,6 @@ function buildFlow(byCat: {name:string, value:number}[], days=30){
       day[b.name] = v
       acc += v
     })
-    // normalizza a 1 (così il river è percentuale)
     base.forEach(b => { day[b.name] = day[b.name] / acc })
     out.push(day)
   }
@@ -82,44 +84,46 @@ export default function Home(){
       {/* HERO premium con bagliori + CTA */}
       <HeroBanner />
 
-      {/* TICKER full-width a tutta pagina (sborda coi gradient edge) */}
-      <Ticker items={byCat.map(c=>c.name)} />
+      {/* TICKER Synth full-width (dentro pill) */}
+      <div className="synth-card p-0 overflow-hidden mt-3">
+        <Ticker items={byCat.map(c=>c.name)} />
+      </div>
 
       {/* KPI + ORACLE */}
       <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
-        <div className="card">
-          <div className="text-xs text-slate-400">
+        <div className="synth-card p-4">
+          <div className="text-xs text-white3">
             Total Vault NAV <InfoTip text="Sum of all appraised assets currently in custody (mock). Updated daily @ 00:00 UTC." />
           </div>
-          <div className="text-2xl font-semibold">€ <CounterRoll value={total} decimals={0}/></div>
+          <div className="text-2xl font-semibold mt-1">€ <CounterRoll value={total} decimals={0}/></div>
           <MiniSpark data={[10,11,13,12,14,15,16,17,16,18,19,20]}/>
-          <div className="badge mt-2">Hysteresis ≥ 1.5%</div>
+          <div className="mt-2 text-[11px] text-white3">Hysteresis ≥ 1.5%</div>
         </div>
 
-        <div className="card">
-          <div className="text-xs text-slate-400">
+        <div className="synth-card p-4">
+          <div className="text-xs text-white3">
             Minted supply (demo) <InfoTip text="Supply minted vs NAV. Real mint becomes active once Sepolia ENV are set." />
           </div>
-          <div className="text-2xl font-semibold">
+          <div className="text-2xl font-semibold mt-1">
             <CounterRoll value={total/1000} suffix=" STIMA" decimals={2}/>
           </div>
-          <div className="text-xs text-slate-400 mt-1">Deterministic @ 00:00 UTC</div>
+          <div className="text-[11px] text-white3 mt-2">Deterministic @ 00:00 UTC</div>
         </div>
 
-        <div className="card">
-          <div className="text-xs text-slate-400">Categories</div>
-          <div className="text-2xl font-semibold">{byCat.length}</div>
-          <div className="text-xs text-slate-400 mt-1">Watch, Art, Car, Gem, Wine, Sneaker</div>
+        <div className="synth-card p-4">
+          <div className="text-xs text-white3">Categories</div>
+          <div className="text-2xl font-semibold mt-1">{byCat.length}</div>
+          <div className="text-xs text-white3 mt-1">Watch, Art, Car, Gem, Wine, Sneaker</div>
         </div>
 
         {/* Card con stile proprio */}
         <OracleSatellite status="Online" />
       </section>
 
-      {/* COVERFLOW 3D per dare “vetrina” ai top/featured */}
+      {/* COVERFLOW 3D + News */}
       <section className="grid md:grid-cols-2 gap-3 mt-3">
         <CoverFlow3D items={featured} />
-        <div className="card">
+        <div className="synth-card p-4">
           <div className="text-sm font-medium mb-2">News (placeholder)</div>
           <ul className="text-sm space-y-2">
             <li>• Sotheby’s sets new record in modern art evening sale.</li>
@@ -127,7 +131,7 @@ export default function Home(){
             <li>• Burgundy rally pauses after three months of gains.</li>
             <li>• Blue-chip classic car index hits decade high.</li>
           </ul>
-          <div className="text-xs text-slate-500 mt-2">Soon: curated feed + sources.</div>
+          <div className="text-xs text-white3 mt-2">Soon: curated feed + sources.</div>
         </div>
       </section>
 
@@ -138,27 +142,41 @@ export default function Home(){
           <InteractiveNavWheel data={byCat} />
         </div>
 
-        {/* 1/3: stack di charts aggiuntivi */}
+        {/* 1/3: stack aggiuntivi */}
         <div className="grid gap-3">
-          <CategoryBarRace data={byCat} />
-          <div className="card">
-            <div className="text-sm font-medium mb-2">NAV Composition — Donut</div>
-            <NavDonut data={byCat} />
+          {/* Donut/Meter Synth stile CRED */}
+          <div className="synth-card p-4">
+            <div className="text-sm font-medium mb-2">NAV Meter</div>
+            <div className="flex justify-center">
+              <SynthRoundMeter
+                value={Math.min(1, (byCat[0]?.value || 0) / 100)}
+                label="NAV Composition"
+                minText="300"
+                maxText="900"
+                centerText={String(Math.round(total / 1000))}
+                gradient="copper"
+              />
+            </div>
           </div>
+
+          <CategoryBarRace data={byCat} />
         </div>
       </section>
 
       {/* CONFIDENCE BANDS + VALUE FLOW STREAM */}
       <section className="grid md:grid-cols-2 gap-3 mt-3">
         <ConfidenceArea data={series} />
-        <ValueFlowStream data={flow} colors={{
-          Art:'#B48C58', Watch:'#6E7F8A', Wine:'#722F37', Car:'#0F4C81', Gem:'#00FFD1', Sneaker:'#E2E8F0'
-        }}/>
+        <ValueFlowStream
+          data={flow}
+          colors={{
+            Art:'#B48C58', Watch:'#6E7F8A', Wine:'#722F37', Car:'#0F4C81', Gem:'#00FFD1', Sneaker:'#E2E8F0'
+          }}
+        />
       </section>
 
       {/* TOP VAULT + EXTRA NEWS */}
       <section className="grid md:grid-cols-2 gap-3 mt-3">
-        <div className="card">
+        <div className="synth-card p-4">
           <div className="text-sm font-medium mb-2">Top Vault Assets</div>
           <div className="space-y-2">
             {top5.map(a => (
@@ -166,7 +184,7 @@ export default function Home(){
                 <img src={a.image} alt="" className="w-12 h-12 object-cover rounded-lg"/>
                 <div className="flex-1">
                   <div className="text-sm font-medium">{a.brand} — {a.name}</div>
-                  <div className="text-xs text-slate-400">
+                  <div className="text-xs text-white3">
                     {a.category} • € {a.value.toLocaleString('en-US')}
                   </div>
                 </div>
@@ -176,14 +194,14 @@ export default function Home(){
           </div>
         </div>
 
-        <div className="card">
+        <div className="synth-card p-4">
           <div className="text-sm font-medium mb-2">Market Headlines (placeholder)</div>
           <ul className="text-sm space-y-2">
             <li>• Auction liquidity improves across blue-chip categories.</li>
             <li>• Vault custody premiums tighten as inflows rise.</li>
             <li>• Tokenized RWA indices outperform crypto majors this week.</li>
           </ul>
-          <div className="text-xs text-slate-500 mt-2">Soon: live feed & sources.</div>
+          <div className="text-xs text-white3 mt-2">Soon: live feed & sources.</div>
         </div>
       </section>
     </>
