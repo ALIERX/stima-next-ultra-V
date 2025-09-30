@@ -1,4 +1,14 @@
-import './globals.css'
+// app/layout.tsx (solo intestazione html/body)
+import "./globals.css";
+import { sans, mono } from "./fonts";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`dark ${sans.variable} ${mono.variable}`}>
+      <body className="min-h-dvh bg-ink text-slate-100 noise">{children}</body>
+    </html>
+  );
+}
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import SoundFXProvider from '@/components/SoundFXProvider'
