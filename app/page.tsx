@@ -9,8 +9,8 @@ import InfoTip from '@/components/InfoTip'
 import InteractiveNavWheel from '@/components/InteractiveNavWheel'
 import CategoryBarRace from '@/components/CategoryBarRace'
 import ConfidenceArea from '@/components/ConfidenceArea'
-import CalendarHeatmapLite from '@/components/CalendarHeatmapLite'
 import NavDonut from '@/components/NavDonut'
+import ValueFlowStream from '@/components/ValueFlowStream'
 
 function sum(xs:number[]){ return xs.reduce((a,b)=>a+b,0) }
 
