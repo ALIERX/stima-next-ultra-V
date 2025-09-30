@@ -2,6 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import SoundFXProvider from '@/components/SoundFXProvider'
+{/* subtle film grain */}
+<div className="noise-overlay" />
 
 export const metadata: Metadata = {
   title: 'STIMA — Asset Intelligence',
