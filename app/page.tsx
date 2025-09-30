@@ -1,4 +1,3 @@
-// app/page.tsx
 import assets from './data/assets.json'
 import CounterRoll from '@/components/CounterRoll'
 import Ticker from '@/components/Ticker'
@@ -12,11 +11,15 @@ import CategoryBarRace from '@/components/CategoryBarRace'
 import ConfidenceArea from '@/components/ConfidenceArea'
 import NavDonut from '@/components/NavDonut'
 import ValueFlowStream from '@/components/ValueFlowStream'
-import dynamic from 'next/dynamic'
 
-// ❌ rimuovi eventuale: import { TokenIntelCard } from '@/components/TokenIntelCard'
-// ✅ usa default + no-SSR (usa hook, vibrazione, ecc.)
-const TokenIntelCard = dynamic(() => import('@/components/TokenIntelCard'), { ssr: false })
+import dynamic from 'next/dynamic'
+const TokenIntelCard = dynamic(
+  () => import('@/components/TokenIntelCard'),
+  { ssr: false }
+)
+
+// opzionale: viewport per themeColor
+export const viewport = { themeColor: '#0A0A0B' }
 
 /* ---------- helpers ---------- */
 function sum(xs:number[]){ return xs.reduce((a,b)=>a+b,0) }
