@@ -11,6 +11,7 @@ import InteractiveNavWheel from '@/components/InteractiveNavWheel'
 import CategoryBarRace from '@/components/CategoryBarRace'
 import ConfidenceArea from '@/components/ConfidenceArea'
 import ValueFlowStream from '@/components/ValueFlowStream'
+import NavMeter from '@/components/NavMeter'
 
 // NEW Synth components
 import SynthRoundMeter from '@/components/SynthRoundMeter'
@@ -162,7 +163,16 @@ export default function Home(){
           <CategoryBarRace data={byCat} />
         </div>
       </section>
-
+<section className="grid md:grid-cols-2 gap-3 mt-3">
+  <NavMeter
+    value={total}                  // il tuo NAV totale
+    min={0}
+    max={1_000_000}
+    title="NAV Meter"
+    description="Indicatore trofico del NAV totale rispetto al range target; utile per uno sguardo rapido."
+  />
+  {/* …l’altro widget a fianco… */}
+</section>
       {/* CONFIDENCE BANDS + VALUE FLOW STREAM */}
       <section className="grid md:grid-cols-2 gap-3 mt-3">
         <ConfidenceArea data={series} />
